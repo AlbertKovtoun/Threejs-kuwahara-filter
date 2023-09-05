@@ -7,6 +7,7 @@ import { Renderer } from "./Renderer"
 import { Sizes } from "./Sizes"
 import { Loaders } from "./Loaders"
 import { Model } from "./Model"
+import { PostProcesing } from "./PostProcessing"
 
 const stats = new Stats()
 stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -38,6 +39,8 @@ export const model = new Model()
 
 export const renderer = new Renderer()
 
+export const postProcessing = new PostProcesing()
+
 //Animate
 const clock = new THREE.Clock()
 let time = Date.now()
@@ -55,7 +58,8 @@ const tick = () => {
   camera.controls.update()
 
   // Render
-  renderer.renderer.render(scene, camera.camera)
+  // renderer.renderer.render(scene, camera.camera)
+  postProcessing.effectComposer.render()
 
   window.requestAnimationFrame(tick)
 
