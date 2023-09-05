@@ -6,10 +6,7 @@ import { Camera } from "./Camera"
 import { Renderer } from "./Renderer"
 import { Sizes } from "./Sizes"
 import { Loaders } from "./Loaders"
-
-import defaultVertexShader from "../../shaders/default/vertex.glsl?raw"
-import defaultFragmentShader from "../../shaders/default/fragment.glsl?raw"
-import { Particles } from "./Particles"
+import { Model } from "./Model"
 
 const stats = new Stats()
 stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -17,36 +14,27 @@ document.body.appendChild(stats.dom)
 
 export const canvas = document.querySelector("canvas.webgl")
 
-export const scene = new THREE.Scene()
-
 export const loaders = new Loaders()
 
-const plane = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 2),
-  new THREE.ShaderMaterial({
-    vertexShader: defaultVertexShader,
-    fragmentShader: defaultFragmentShader,
-    side: THREE.DoubleSide,
-    transparent: true,
+export const scene = new THREE.Scene()
+loaders.rgbeLoader.load(
+  "/images/evening_road_01_puresky_2k.hdr",
+  (environmentMap) => {
+    environmentMap.mapping = THREE.EquirectangularReflectionMapping
 
-    uniforms: {
-      uTexture: { value: loaders.textureLoader.load("/images/Duck.jpg") },
-      uOpacity: { value: 0 },
-    },
-  })
+    // scene.background = environmentMap
+    scene.environment = environmentMap
+  }
 )
-scene.add(plane)
-
-gsap.to(plane.material.uniforms.uOpacity, {
-  value: 1,
-  duration: 4,
-})
-
-export const particles = new Particles()
 
 export const sizes = new Sizes()
 
 export const camera = new Camera()
+
+// const ambientLight = new THREE.AmbientLight(0xffffff, 1.0)
+// scene.add(ambientLight)
+
+export const model = new Model()
 
 export const renderer = new Renderer()
 
