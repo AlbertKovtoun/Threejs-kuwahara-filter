@@ -1,0 +1,21 @@
+{
+  "name": "threejs-config",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "sass": "^1.54.6",
+    "vite": "^4.3.9"
+  },
+  "dependencies": {
+    "gsap": "^3.12.0",
+    "stats.js": "^0.17.0",
+    "three": "^0.153.0",
+    "tweakpane": "^3.1.0"
+  }
+}
