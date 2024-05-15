@@ -1,6 +1,7 @@
 import * as THREE from "three"
 import Stats from "stats.js"
 import gsap from "gsap"
+import { Pane } from "tweakpane"
 
 import { Camera } from "./Camera"
 import { Renderer } from "./Renderer"
@@ -12,6 +13,8 @@ import { PostProcesing } from "./PostProcessing"
 const stats = new Stats()
 stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
 document.body.appendChild(stats.dom)
+
+export const pane = new Pane()
 
 export const canvas = document.querySelector("canvas.webgl")
 

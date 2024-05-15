@@ -3,7 +3,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass"
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass"
 import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader"
-import { camera, renderer, scene, sizes } from "./Experience"
+import { camera, pane, renderer, scene, sizes } from "./Experience"
 
 import kuwaharaVertexShader from "../../shaders/kuwahara/vertex.glsl?raw"
 import kuwaharaFragmentShader from "../../shaders/kuwahara/fragment.glsl?raw"
@@ -14,7 +14,7 @@ export class PostProcesing {
 
     this.effectComposer = new EffectComposer(
       renderer.renderer,
-      this.renderTarget
+      this.renderTarget,
     )
     this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     this.effectComposer.setSize(sizes.width, sizes.height)
@@ -28,6 +28,8 @@ export class PostProcesing {
     this.KuwaharaShader = {
       uniforms: {
         tDiffuse: { value: null },
+        uResolution: { value: new THREE.Vector2(sizes.width, sizes.height) },
+        uRadius: { value: 8 },
       },
       vertexShader: kuwaharaVertexShader,
       fragmentShader: kuwaharaFragmentShader,
@@ -40,5 +42,18 @@ export class PostProcesing {
       this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       this.effectComposer.setSize(sizes.width, sizes.height)
     })
+
+    //Add tweaks
+    pane
+      .addBinding(this.KuwaharaShader.uniforms.uRadius, "value", {
+        min: 0,
+        max: 10,
+        step: 1,
+        label: "Blur radius",
+      })
+      .on("change", (ev) => {
+        this.KuwaharaShader.uniforms.uRadius.value = ev.value
+        console.log(this.KuwaharaShader.uniforms.uRadius.value)
+      })
   }
 }
