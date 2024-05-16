@@ -6,7 +6,7 @@ export class Model {
   }
 
   setModel() {
-    this.model = loaders.gltfLoader.load("/models/bunny.glb", (gltf) => {
+    this.model = loaders.gltfLoader.load("/models/box.glb", (gltf) => {
       this.modelGroup = gltf.scene
       scene.add(this.modelGroup)
     })

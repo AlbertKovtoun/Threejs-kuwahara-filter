@@ -52,8 +52,7 @@ export class PostProcesing {
         label: "Blur radius",
       })
       .on("change", (ev) => {
-        this.KuwaharaShader.uniforms.uRadius.value = ev.value
-        console.log(this.KuwaharaShader.uniforms.uRadius.value)
+        this.kuwaharaPass.material.uniforms.uRadius.value = ev.value
       })
   }
 }
